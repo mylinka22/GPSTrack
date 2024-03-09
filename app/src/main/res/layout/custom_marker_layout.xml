@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+
+<!--    <ImageView-->
+<!--        android:id="@+id/imageView"-->
+<!--        android:layout_height="40dp"-->
+<!--        android:layout_width="40dp"-->
+<!--        android:adjustViewBounds="true"-->
+<!--        android:scaleType="fitCenter"-->
+<!--        android:src="@drawable/person"-->
+<!--        />-->
+
+<!--     <RelativeLayout-->
+<!--        android:layout_height="40dp"-->
+<!--        android:layout_width="40dp"-->
+<!--        android:background="@drawable/rounded_circle"-->
+<!--        android:clipChildren="true"/>-->
+
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_height="40dp"
+        android:layout_width="40dp"
+        android:gravity="center"
+        android:textSize="25sp"
+        android:background="@color/white"
+        android:text="M" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_height="40dp"
+        android:layout_width="40dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ramka"/>
+
+
+
+
+
+
+</RelativeLayout>

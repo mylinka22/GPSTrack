@@ -1,0 +1,6 @@
+<!-- res/drawable/custom_marker_background.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="#F30000"/> <!-- Здесь укажите цвет фона -->
+    <corners android:radius="40dp"/> <!-- Радиус скругления краев -->
+</shape>
