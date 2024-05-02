@@ -17,10 +17,12 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
+    private SessionManager sessionManager;
 
 
     @Override
@@ -29,6 +31,15 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         mAuth = FirebaseAuth.getInstance();
+        sessionManager = new SessionManager(this);
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+
+        // Проверяем, был ли пользователь ранее авторизован
+        if (sessionManager.isLoggedIn() && currentUser != null) {
+            navigateToMapActivity();
+        }
+
+
 
         Button button_login = findViewById(R.id.button_login);
         Button button_reg = findViewById(R.id.button_reg);
@@ -70,6 +81,16 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+
+    private void navigateToMapActivity() {
+        Intent intent = new Intent(LoginActivity.this, MapsActivity.class);
+        startActivity(intent);
+        finish(); // Закрываем LoginActivity, чтобы пользователь не мог вернуться назад
+    }
+
+
+
+
     private void SingUser(String email, String password) {
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -78,9 +99,10 @@ public class LoginActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             Toast.makeText(LoginActivity.this, "Авторизация успешна", Toast.LENGTH_LONG).show();
 
-                            //Intent intent = new Intent(LoginActivity.this, YandexMapKitView.class);
-                            Intent intent = new Intent(LoginActivity.this, MapsActivity.class);
-                            startActivity(intent);
+                            // Сохраняем состояние авторизации и адрес электронной почты
+                            sessionManager.setLoggedIn(true);
+                            sessionManager.setEmail(email);
+                            navigateToMapActivity();
                         } else {
                             Log.e("FirebaseAuth", "Registration failed: " + task.getException());
                             Toast.makeText(LoginActivity.this, "Ошибка", Toast.LENGTH_LONG).show();

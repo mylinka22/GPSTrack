@@ -9,6 +9,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -80,11 +81,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private GoogleMap googleMap;
     private FusedLocationProviderClient fusedLocationClient;
     private LocationRequest locationRequest;
+    private SessionManager sessionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
+        sessionManager = new SessionManager(this);
 
         // Получаем фрагмент карты из макета
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -110,6 +114,18 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         } else {
             startLocationUpdates();
         }
+
+        ImageButton im2 = findViewById(R.id.im2);
+        im2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut(); // Выход из Firebase
+                sessionManager.setLoggedIn(false);
+                // Перемещение на предыдущую активити
+                finish();
+            }
+        });
+
 
 
         // Получаем ссылку на базу данных Firebase и настроим слушатель для получения данных
